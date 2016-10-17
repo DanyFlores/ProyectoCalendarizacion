@@ -1,0 +1,54 @@
+#include "node.h"
+#include <iostream>
+
+
+//Constructor
+    node::node(int x): n(x){
+        data = x;
+    }
+
+//Destructor
+    stack::~stack(){
+        delete[] array;
+    }
+
+//Size
+    int stack::size() const {
+        return s;
+    }
+//Vacuidad
+    bool stack::empty(){
+            return s == 0;
+    }
+
+//Plenitud
+    bool stack::full(){
+        return s == n;
+    }
+
+//Extraccion
+    int stack::pop(){
+        if(empty()){
+            printf("Pila vacia\n");
+            return 0;
+        }
+        return array[--s];
+    }
+
+//Consulta
+    int stack::top(){
+        if(empty()){
+           printf("Pila vacia\n");
+           return 0;
+        }
+        return array[s-1];
+    }
+
+//Insercion
+    void stack::push(int data){
+        if(full()) printf("Pila llena\n");
+        else {
+            array[s++] = data;
+        }
+    }
+

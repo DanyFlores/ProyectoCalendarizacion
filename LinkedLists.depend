@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1476326802 source:c:\users\dany-\universidad\3° semestre\estructura de datos\linkedlists\list.cpp
+
+1476746211 source:c:\users\dany-\universidad\3° semestre\estructura de datos\linkedlists\main.cpp
+	<iostream>
+	<stdlib.h>
+	"list.h"
+
+1476745149 c:\users\dany-\universidad\3° semestre\estructura de datos\linkedlists\node.h
+	<iostream>
+
+1476738830 source:c:\users\dany-\universidad\3° semestre\estructura de datos\linkedlists\node.cpp
+
+1476746283 c:\users\dany-\universidad\3° semestre\estructura de datos\linkedlists\list.h
+	<iostream>
+	"node.h"
+
