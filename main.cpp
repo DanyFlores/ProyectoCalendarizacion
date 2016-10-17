@@ -1,6 +1,5 @@
 #include <iostream>
 #include <stdlib.h>
-//#include "node.h"
 #include "list.h"
 
 using namespace std;
