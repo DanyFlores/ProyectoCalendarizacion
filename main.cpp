@@ -17,9 +17,9 @@ void imprimeMenu(){
 
 void crearProcesos(){
     char sel, nombre; int tiempo, priori;
-    cout << "Creación de procesos";
+    cout << endl << "Creación de procesos";
     do {
-        cout << "Inserte caracter de proceso: ";
+        cout << endl << "Inserte caracter de proceso: ";
         cin >> nombre;
         cout << "Inserte tiempo del proceso: ";
         cin >> tiempo;
@@ -34,6 +34,8 @@ void crearProcesos(){
     }
 }
 
+
+
 int main(){
     int opc;
     do {
@@ -41,7 +43,7 @@ int main(){
         cin >> opc;
         switch(opc){
             case 1: crearProcesos(); break;
-            case 2: break;
+            case 2: lista->impresionFIFO(); break;
             case 3: break;
             case 4: break;
             case 5: break;

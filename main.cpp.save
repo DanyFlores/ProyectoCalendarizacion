@@ -1,6 +1,5 @@
 #include <iostream>
 #include <stdlib.h>
-//#include "node.h"
 #include "list.h"
 
 using namespace std;
@@ -35,6 +34,8 @@ void crearProcesos(){
     }
 }
 
+
+
 int main(){
     int opc;
     do {
@@ -42,7 +43,7 @@ int main(){
         cin >> opc;
         switch(opc){
             case 1: crearProcesos(); break;
-            case 2: fifo(break;
+            case 2: lista->imFIFO(); break;
             case 3: break;
             case 4: break;
             case 5: break;
