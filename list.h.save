@@ -9,6 +9,7 @@ class list {
    private:
        node *first;
        node *actual;
+       //Prueba para saber si la lista está vacía
        bool emptyness(){
         return(this->first == NULL);
        }
@@ -17,53 +18,94 @@ class list {
         this->first = NULL;
         this->actual = NULL;
     }
+    //Método para insertar nodos (procesos) a la lista
     void insertar(int time, int prior, char name){
-        node *nuevo = new node(prior, time,name);
-        if(emptyness()){
-            this->first = nuevo;
+        node *nuevo = new node(prior, time,name); // Creación de un nuevo nodo
+        if(emptyness()){ //Prueba para determinar si es el primer nodo o no
+            this->first = nuevo; //De ser verdadera, el nodo se inserta al inicio
         } else {
-            this->actual->next = nuevo;
+            this->actual->next = nuevo; // De lo contrario, se inserta después del último nodo insertado
         }
-        this->actual = nuevo;
+        this->actual = nuevo; //El nuevo nodo se vuelve el último insertado
     }
-
+    //Método para imprimir la lista después de insertar los datos
     void imprimir(){
-        node *p = first;
+        node *p = first; //Inicialización del nodo utilizado para recorrer la lista
         do {
-            cout << p->nombre << "(" << p->tiempo << "," << p->prioridad << ")";
-            cout << "->";
-            p = p->next;
+            cout << p->nombre << "(" << p->tiempo << "," << p->prioridad << ")"; //Imprime la información almacenada en el nodo (Formato: Nombre(Tiempo,Prioridad).
+            cout << "->"; //Flecha apuntadora al siguiente nodo
+            p = p->next; //El nodo de recorrido avanza al siguiente nodo
         } while(p != NULL);
-        cout << "NULL";
+        cout << "NULL" << endl; //Impresión de NULL para indicar el final de la lista
     }
-    void metodoFIFO(){
-        node *p = first;
-        int TRs = 0;
-        impresionFIFO();
-        do{
-            TRs += p->tiempo;
-            cout << endl << "Tiempo de retorno de " << p->nombre << ": " << TRs << endl;
-            p = p->next;
-        } while(p != NULL);
-
-    }
-    void impresionFIFO(){
-        node *aux = first;
-        node *p;
-        do {
-            p = aux;
+    /*void metodoFIFO(){
+        if(!emptyness()){
+            node *p = first;
+            int TRs = 0;
+            impresionFIFO();
             do{
-                cout << p->nombre << "(" << p->tiempo << "," << p->prioridad << ")";
+                TRs += p->tiempo;
+                p = p->next;
+            } while(p != NULL);
+        } else {
+            cout << "Lista vacía." << endl;
+        }
+    }*/
+    //Método para realizar la impresión por algoritmo FIFO, con tiempos de retorno
+    void impresionFIFO(){
+        if(!emptyness()){ //Prueba lógica para evitar errores en la ejecución
+            int TRs = 0; //Variable para almacenar los Tiempos de Retorno de cada proceso
+            node *aux = first; //Nodo auxiliar para avanzar la impresión
+            node *p; //Nodo de recorrido de la lista para impresión de la misma
+            do {
+                p = aux; //Establecer el nodo de recorrido al nodo por procesar
+                do{
+                    cout << p->nombre << "(" << p->tiempo << "," << p->prioridad << ")"; //Impresión del nodo (Formato: Nombre(Tiempo,Prioridad)).
+                    cout << "->"; //Flecha apuntadora al siguiente nodo
+                    p = p->next; //El nodo de recorrido avanza al siguiente nodo.
+                } while(p != NULL);
+                cout << "NULL" << endl; //Impresión de NULL para indicar el final de la lista.
+                TRs = TRs + aux->tiempo; //Se guarda el nuevo tiempo de retorno para cada proceso, sumando su tiempo a los tiempos de los anteriores
+                cout << endl << "Tiempo de retorno de " << aux->nombre << ": " << TRs << endl; //Impresión del tiempo de retorno del nodo procesado
+                aux = aux->next; //Avanza el nodo auxiliar para indicar el siguiente nodo a procesar
+            } while (aux != NULL);
+        } else {
+            cout << "Lista vacia." << endl; //De otra manera, se imprime que la lista está vacía para evitar crash del programa
+        }
+    }
+
+    //Método para impresión del algoritmo Round-Robin
+    void metodoRR(int quantum){ //Recibe como parámetro el quantum, que resulta como promedio de los tiempos ingresados a lo largo de la captura
+        if(!emptyness()){ //Prueba lógica para comprobar que la lista no está vacía; de ser verdadera, procede con la impresión
+            int TRs = 0; //Declaración de la variable para almacenar los tiempos de retorno
+            node *p = first; //Inicialización del nodo que recorre la lista
+            do {
+                if(p->tiempo <= quantum){ //Prueba lógica para determinar si el quantum asignado es suficiente para procesar el nodo. De cumplirse:
+                    impresionRR(p); //Muestra la lista de nodos a procesar
+                    TRs += p->tiempo; //Aumenta el tiempo de retorno del proceso
+                    cout << "Tiempo de retorno de " << p->nombre << ": " << TRs << endl; //Muestra en pantalla el tiempo de retorno del proceso
+                    p = p->next; //El nodo de recorrido avanza al siguiente nodo
+                } else { //De no cumplirse:
+                    impresionRR(p); //Muestra la lista de nodos a procesar
+                    TRs += quantum; //Aumenta a los tiempos de retorno el quantum
+                    int newTime = p->tiempo - quantum; //Calcula el tiempo restante para procesar al nodo
+                    insertar(newTime, p->prioridad, p->nombre); //Añade el nodo al final de la lista para procesarlo posteriormente
+                    p = p->next; //El nodo empleado para el recorrido avanza al siguiente nodo
+                }
+            } while(p != NULL);
+        }
+    }
+    //Método para mostrar en pantalla la lista de procesos para el método Round-Robin
+    void impresionRR(node *inicial){ //La función recibe como parámetro el nodo desde el cual comenzará a mostrar (el cual es el nodo a procesar)
+        node *p = inicial; //Inicializa un nuevo nodo para realizar el recorrido
+            do{
+                cout << p->nombre << "(" << p->tiempo << "," << p->prioridad << ")"; //Muestra 
                 cout << "->";
                 p = p->next;
             } while(p != NULL);
             cout << "NULL" << endl;
-            aux = aux->next;
-        } while (aux != NULL);
-
     }
-    
-    void 
+
 };
 
 #endif // __list_
