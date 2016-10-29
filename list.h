@@ -105,6 +105,41 @@ class list {
             } while(p != NULL);
             cout << "NULL" << endl; // Muestra NULL en pantalla, indicando el final de la lista.
     }
+    //Método para insertar datos de manera ordenada (tomando como argumento para el ordenamiento el tiempo requerido)
+    void insertarSJF(int tiempo, int prioridad, char nombre){
+        node *nuevo = new node(prioridad, tiempo, nombre);
+        if(emptyness()){
+            this->first = nuevo;
+            this->actual = first;
+        } else if(nuevo->tiempo < first->tiempo){
+            nuevo->next = first;
+            this->first = nuevo;
+        } else if(nuevo->tiempo > actual->tiempo){
+            this->actual->next = nuevo;
+            this->actual = nuevo;
+        } else {
+            node *q = first;
+            node *r = q->next;
+            do {
+
+                if(nuevo->tiempo > q->tiempo && nuevo->tiempo < r->tiempo){
+                    nuevo->next = r;
+                    q->next = nuevo;
+                } else{
+                    q = q->next;
+                    r = r->next;
+                }
+            } while(r->next != NULL);
+
+        }
+        node *p = first;
+        do {
+            cout << p->nombre << "(" << p->tiempo << "," << p->prioridad << ")";
+            cout << "->";
+            p = p->next;
+        } while(p!=NULL);
+        cout << "NULL" << endl;
+    }
 
 };
 

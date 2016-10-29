@@ -99,11 +99,46 @@ class list {
     void impresionRR(node *inicial){ //La función recibe como parámetro el nodo desde el cual comenzará a mostrar (el cual es el nodo a procesar)
         node *p = inicial; //Inicializa un nuevo nodo para realizar el recorrido
             do{
-                cout << p->nombre << "(" << p->tiempo << "," << p->prioridad << ")"; //Muestra 
-                cout << "->";
-                p = p->next;
+                cout << p->nombre << "(" << p->tiempo << "," << p->prioridad << ")"; //Muestra el nodo actual
+                cout << "->"; //Muestra la flecha que apunta al siguiente nodo
+                p = p->next; //Avanza el nodo de recorrido al siguiente nodo
             } while(p != NULL);
-            cout << "NULL" << endl;
+            cout << "NULL" << endl; // Muestra NULL en pantalla, indicando el final de la lista.
+    }
+    //Método para insertar datos de manera ordenada (tomando como argumento para el ordenamiento el tiempo requerido)
+    void insertarSJF(int tiempo, int prioridad, char nombre){
+        node *nuevo = new node(prioridad, tiempo, nombre);
+        if(emptyness()){
+            this->first = nuevo;
+            this->actual = first;
+        } else if(nuevo->tiempo < first->tiempo){
+            nuevo->next = first;
+            this->first = nuevo;
+        } else if(nuevo->tiempo > actual->tiempo){
+            this->actual->next = nuevo;
+            this->actual = nuevo;
+        } else {
+            node *q = first;
+            node *r = q->next;
+            do {
+
+                if(nuevo->tiempo > q->tiempo && nuevo->tiempo < r->tiempo){
+                    nuevo->next = r;
+                    q->next = nuevo;
+                } else{
+                    q = q->next;
+                    r = r->ne
+                }
+            } while(r->next != NULL);
+
+        }
+        node *p = first;
+        do {
+            cout << p->nombre << "(" << p->tiempo << "," << p->prioridad << ")";
+            cout << "->";
+            p = p->next;
+        } while(p!=NULL);
+        cout << "NULL" << endl;
     }
 
 };

@@ -17,16 +17,16 @@
 
 1476326802 source:c:\users\dany-\universidad\3° semestre\sistemas operativos\parcial 2\practica calendarizacion\linkedlists\list.cpp
 
-1477440618 source:c:\users\dany-\universidad\3° semestre\sistemas operativos\parcial 2\practica calendarizacion\linkedlists\main.cpp
+1477694933 source:c:\users\dany-\universidad\3° semestre\sistemas operativos\parcial 2\practica calendarizacion\linkedlists\main.cpp
 	<iostream>
 	<stdlib.h>
 	"list.h"
 
-1477444803 c:\users\dany-\universidad\3° semestre\sistemas operativos\parcial 2\practica calendarizacion\linkedlists\list.h
+1477695616 c:\users\dany-\universidad\3° semestre\sistemas operativos\parcial 2\practica calendarizacion\linkedlists\list.h
 	<iostream>
 	"node.h"
 
-1476745149 c:\users\dany-\universidad\3° semestre\sistemas operativos\parcial 2\practica calendarizacion\linkedlists\node.h
+1477446009 c:\users\dany-\universidad\3° semestre\sistemas operativos\parcial 2\practica calendarizacion\linkedlists\node.h
 	<iostream>
 
 1476738830 source:c:\users\dany-\universidad\3° semestre\sistemas operativos\parcial 2\practica calendarizacion\linkedlists\node.cpp
