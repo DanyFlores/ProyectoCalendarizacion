@@ -107,31 +107,32 @@ class list {
     }
     //Método para insertar datos de manera ordenada (tomando como argumento para el ordenamiento el tiempo requerido)
     void insertarSJF(int tiempo, int prioridad, char nombre){
-        node *nuevo = new node(prioridad, tiempo, nombre);
-        if(emptyness()){
+        node *nuevo = new node(prioridad, tiempo, nombre); //Creación del nodo a insertar
+        if(emptyness()){ //Si la lista está vacía, establece el nodo creado como primer nodo de la lista
             this->first = nuevo;
-            this->actual = first;
-        } else if(nuevo->tiempo < first->tiempo){
-            nuevo->next = first;
+            this->actual = first; //Establece el nodo creado como el último nodo insertado
+        } else if(nuevo->tiempo < first->tiempo){ // De otro modo, si el tiempo del nuevo nodo es menor al del primero
+            nuevo->next = first; //Se establece el nuevo nodo como primer nodo, recorriendo la lista hacia la derecha
             this->first = nuevo;
-        } else if(nuevo->tiempo > actual->tiempo){
+        } else if(nuevo->tiempo > actual->tiempo){ //De otro modo, si el tiempo del nuevo nodo es mayor al del último nodo, se agrega el nodo al final
             this->actual->next = nuevo;
             this->actual = nuevo;
-        } else {
-            node *q = first;
-            node *r = q->next;
+        } else { // De otro modo, se recorre la lista hasta que el nodo se pueda posicionar entre uno con menor tiempo y uno con mayor tiempo que el nodo recién creado
+            node *q = first; //Nodo principal
+            node *r = q->next; //Nodo auxiliar
             do {
 
-                if(nuevo->tiempo > q->tiempo && nuevo->tiempo < r->tiempo){
-                    nuevo->next = r;
+                if(nuevo->tiempo > q->tiempo && nuevo->tiempo < r->tiempo){ //Si el tiempo del nuevo nodo es mayor al anterior y menor al siguiente
+                    nuevo->next = r; //Se inserta el nodo entre esos nodos
                     q->next = nuevo;
                 } else{
-                    q = q->next;
+                    q = q->next; //De otra manera continúa recorriendo la lista
                     r = r->next;
                 }
-            } while(r->next != NULL);
+            } while(r->next != NULL); //Se repite mientras el nodo secundario no sea nulo
 
         }
+        /*
         node *p = first;
         do {
             cout << p->nombre << "(" << p->tiempo << "," << p->prioridad << ")";
@@ -139,6 +140,7 @@ class list {
             p = p->next;
         } while(p!=NULL);
         cout << "NULL" << endl;
+        */
     }
 
 };
