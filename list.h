@@ -38,19 +38,7 @@ class list {
         } while(p != NULL);
         cout << "NULL" << endl; //Impresión de NULL para indicar el final de la lista
     }
-    /*void metodoFIFO(){
-        if(!emptyness()){
-            node *p = first;
-            int TRs = 0;
-            impresionFIFO();
-            do{
-                TRs += p->tiempo;
-                p = p->next;
-            } while(p != NULL);
-        } else {
-            cout << "Lista vacía." << endl;
-        }
-    }*/
+
     //Método para realizar la impresión por algoritmo FIFO, con tiempos de retorno
     void impresionFIFO(){
         if(!emptyness()){ //Prueba lógica para evitar errores en la ejecución
@@ -132,17 +120,59 @@ class list {
             } while(r->next != NULL); //Se repite mientras el nodo secundario no sea nulo
 
         }
-        /*
-        node *p = first;
-        do {
-            cout << p->nombre << "(" << p->tiempo << "," << p->prioridad << ")";
-            cout << "->";
-            p = p->next;
-        } while(p!=NULL);
-        cout << "NULL" << endl;
-        */
     }
 
-};
+    void insertarPrioridad(int tiempo, int prioridad, char nombre){
+        node *nuevo = new node(prioridad, tiempo, nombre); //Creación del nodo a insertar
+        if(emptyness()){ //Si la lista está vacía, establece el nodo creado como primer nodo de la lista
+            this->first = nuevo;
+            this->actual = nuevo; //Establece el nodo creado como el último nodo insertado
+        } else if(nuevo->prioridad < actual->prioridad){ // De otro modo, si el tiempo del nuevo nodo es menor al del primero
+            this->actual->next = nuevo;  //Se establece el nuevo nodo como primer nodo, recorriendo la lista hacia la derecha
+            this->actual = nuevo;
+        } else if(nuevo->prioridad > first->prioridad){ //De otro modo, si el tiempo del nuevo nodo es mayor al del último nodo, se agrega el nodo al final
+            nuevo->next = first;
+            this->first = nuevo;
+        } else { // De otro modo, se recorre la lista hasta que el nodo se pueda posicionar entre uno con menor tiempo y uno con mayor tiempo que el nodo recién creado
+            node *q = first; //Nodo principal
+            node *r = q->next; //Nodo auxiliar
+            do {
+                if(nuevo->prioridad < q->prioridad && nuevo->prioridad > r->prioridad){ //Si el tiempo del nuevo nodo es mayor al anterior y menor al siguiente
+                    nuevo->next = r; //Se inserta el nodo entre esos nodos
+                    q->next = nuevo;
+                    break;
+                } else if(nuevo->prioridad < q->prioridad && nuevo->prioridad == r->prioridad){
+                    nuevo->next = r->next;
+                    r->next = nuevo;
+                    break;
+                } else{
+                    q = q->next; //De otra manera continúa recorriendo la lista
+                    r = r->next;
+                }
+            } while(r->next != NULL); //Se repite mientras el nodo secundario no sea nulo
+        }
+    }
 
+   void metodoPrioridad(int quantum){
+        if(!emptyness()){ //Prueba lógica para comprobar que la lista no está vacía; de ser verdadera, procede con la impresión
+            int TRs = 0; //Declaración de la variable para almacenar los tiempos de retorno
+            node *p = first; //Inicialización del nodo que recorre la lista
+            do {
+                if(p->tiempo <= quantum){ //Prueba lógica para determinar si el quantum asignado es suficiente para procesar el nodo. De cumplirse:
+                    impresionRR(p); //Muestra la lista de nodos a procesar
+                    TRs += p->tiempo; //Aumenta el tiempo de retorno del proceso
+                    cout << "Tiempo de retorno de " << p->nombre << ": " << TRs << endl; //Muestra en pantalla el tiempo de retorno del proceso
+                    p = p->next; //El nodo de recorrido avanza al siguiente nodo
+                } else { //De no cumplirse:
+                    impresionRR(p); //Muestra la lista de nodos a procesar
+                    TRs += quantum; //Aumenta a los tiempos de retorno el quantum
+                    int newTime = p->tiempo - quantum; //Calcula el tiempo restante para procesar al nodo
+                    int newPriori = p->prioridad - 1;
+                    insertarPrioridad(newTime, newPriori, p->nombre); //Añade el nodo al final de la lista para procesarlo posteriormente
+                    p = p->next; //El nodo empleado para el recorrido avanza al siguiente nodo
+                }
+            } while(p != NULL);
+        }
+    }
+};
 #endif // __list_

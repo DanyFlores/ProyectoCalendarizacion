@@ -39,6 +39,7 @@ void crearProcesos(){
         quantum = ttotal / procesos; //Calcula el quantum
         listaRR->insertar(tiempo, priori, nombre); //Inserta un nuevo nodo en la lista para el algoritmo Round-Robin
         listaSJF->insertarSJF(tiempo, priori, nombre);
+        listaPriori->insertarPrioridad(tiempo, priori, nombre);
         cout << "Continuar agregando procesos? (s/n): "; //Pregunta si se desea continuar agregando nodos (procesos) a la lista
         cin >> sel;
     } while(sel != 'n');
@@ -57,8 +58,8 @@ int main(){
             case 2: lista->impresionFIFO(); break; //Realiza la impresión del método FIFO
             case 3: listaSJF->impresionFIFO(); break; //Realiza la impresión del método SJF
             case 4: lista->metodoRR(quantum); break; //Realiza la impresión del método Round-Robin
-            case 5: break; //Realiza la impresión del método por prioridad
-            case 6: cout << "Saliendo..." << endl; delete lista; break; //Termina la ejecución del programa, además de eliminar las listas utilizadas para limpiar la memoria
+            case 5: listaPriori->metodoPrioridad(quantum); break; //Realiza la impresión del método por prioridad
+            case 6: cout << "Saliendo..." << endl; delete lista; delete listaPriori; delete listaRR; delete listaSJF; break; //Termina la ejecución del programa, además de eliminar las listas utilizadas para limpiar la memoria
             default: cout << "Opción no válida, intente de nuevo"; break; //De seleccionar una opción no válida, imprime un mensaje indicando que no es una opción válida
 
         }
